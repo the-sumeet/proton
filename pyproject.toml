@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "proton"
+version = "0.1.0"
+description = ""
+authors = ["sumeet <sumeet.mathpati@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+proton = "proton.main:app"
+
+[tool.poetry.dependencies]
+python = "~3.12"
+typer = "^0.13.1"
+pydantic = "^2.10.3"
+
+[tool.poetry.group.dev.dependencies]
+watchdog = "^6.0.0"
+black = "^24.10.0"
+isort = "^5.13.2"
+flake8 = "^7.1.1"
+pytest = "^8.3.4"
+setuptools = "^75.6.0"
+pex = "^2.24.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
