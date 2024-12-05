@@ -32,3 +32,4 @@ version = "0.1.0"
 description = "A description of your package"
 author = "Sumeet Mathpati"
 license = "GPLv3"
+packages = ["proton"]
