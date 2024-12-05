@@ -25,11 +25,3 @@ pex = "^2.24.3"
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-name = "proton"
-version = "0.1.0"
-description = "A description of your package"
-author = "Sumeet Mathpati"
-author_email = "sumeet.mathpati@gmail.com"
-packages = ["proton"]  # list your package module(s) here
