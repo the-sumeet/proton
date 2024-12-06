@@ -28,7 +28,7 @@ def init(
 ):
     init_config = InitConfig(name=name, fe_type=type)
 
-    logger.info(f"Creating project '{name}' of type '{type}'")
+    logger.info(f"Creating project '{name}' of type '{type.name}'")
     if type == FeType.vanilla:
         copy_template_dir(Path(__file__).parent / "templates/vanilla", init_config)
     elif type == FeType.svelte:
