@@ -37,7 +37,6 @@ def init(
 
 @app.command()
 def dev():
-    global webviewProcess
     current_dir = os.getcwd()
     app_name = current_dir.split("/")[-1]
 
