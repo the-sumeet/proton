@@ -5,6 +5,18 @@ description = ""
 authors = ["sumeet <sumeet.mathpati@gmail.com>"]
 readme = "README.md"
 
+
+[project]
+name = "proton"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = "~3.12"
+authors =  [
+    {name = "Sumeet Mathpati", email = "sumeet.mathpati@gmail.com"},
+]
+license = {file = "LICENSE"}
+
 [tool.poetry.scripts]
 proton = "proton.main:app"
 
