@@ -1,0 +1,6 @@
+{
+  "fe:install": "npm install",
+  "fe:build": "npm run build",
+  "fe:dev:watcher": "npm run dev",
+  "fe:dev:serverUrl": "auto"
+}

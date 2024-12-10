@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    .preview {
+        @apply p-4;
+    }
+    .preview h1, .preview h2, .preview h3, .preview h4, .preview h5, .preview h6 {
+      @apply font-bold mt-4;
+    }
+    .preview h1 {
+      @apply text-2xl;
+    }
+
+    .preview h2 {
+      @apply text-xl;
+    }
+
+    .preview h3 {
+      @apply text-lg;
+    }
+
+    .preview h4, .preview h5, .preview h6 {
+      @apply  text-sm;
+    }
+
+    .preview ol {
+      @apply list-decimal list-inside pl-2 mt-2;
+    }
+
+    .preview ul {
+      @apply list-disc list-inside pl-2 mt-2;
+    }
+
+    .preview pre {
+        @apply bg-gray-100 p-2 rounded-lg;
+    }
+  }
