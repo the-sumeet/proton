@@ -30,23 +30,25 @@ def init(
 
     logger.info(f"Creating project '{name}' of type '{type.name}'")
     if type == FeType.vanilla:
-        copy_template_dir(Path(__file__).parent / "templates/vanilla", init_config)
+        copy_template_dir(Path(__file__).parent / "templates/$vanilla", init_config)
     elif type == FeType.svelte:
-        copy_template_dir(Path(__file__).parent / "templates/svelte", init_config)
+        copy_template_dir(Path(__file__).parent / "templates/$svelte", init_config)
 
 
 @app.command()
 def dev():
     current_dir = os.getcwd()
     app_name = current_dir.split("/")[-1]
-
+    frontend_dir = os.path.join(current_dir,  f"{app_name}/frontend")
+    app_dir = os.path.join(current_dir, app_name)
     config = load_app_config(current_dir)
 
     # Install FE dependencies.
-    logger.info(f"Installing front-end dependencies in {current_dir + '/frontend'}")
+
+    logger.info(f"Installing front-end dependencies in {frontend_dir}")
     process = subprocess.Popen(
         config.fe_install.split(" "),
-        cwd=os.path.join(current_dir, "frontend"),
+        cwd=frontend_dir,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True
@@ -65,7 +67,7 @@ def dev():
     # Start FE server, keep reading the stdout
     process = subprocess.Popen(
         config.fe_dev_watcher.split(" "),
-        cwd=os.path.join(current_dir, "frontend"),
+        cwd=frontend_dir,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True
@@ -91,22 +93,27 @@ def dev():
 
     # Start watching python files
     def codegen():
-        js_bindings = get_js_bindings(current_dir, MAIN_FILE_NAME)
-        os.makedirs(os.path.join(current_dir, "frontend/proton/main"), exist_ok=True)
-        with open(os.path.join(current_dir, "frontend/proton/main/App.js"), "w") as file:
+        js_pywebview_api = get_js_code(app_dir, MAIN_FILE_NAME)
+        os.makedirs(os.path.join(frontend_dir, "proton/main"), exist_ok=True)
+        with open(os.path.join(frontend_dir, "proton/main/pyapi.js"), "w") as file:
+            file.write(js_pywebview_api)
+
+        js_bindings = get_js_bindings(app_dir, MAIN_FILE_NAME)
+        os.makedirs(os.path.join(frontend_dir, "proton/main"), exist_ok=True)
+        with open(os.path.join(frontend_dir, "proton/main/App.js"), "w") as file:
             file.write(js_bindings)
 
     def get_process():
         return Process(
             target=get_window,
             args=(
+                app_dir,
                 app_name,
                 vite_server_url,
-                get_js_code(current_dir, MAIN_FILE_NAME),
             )
         )
     get_on_change(get_process, codegen)()
-    start_watcher(current_dir, get_on_change(get_process, codegen))
+    start_watcher(app_dir, get_on_change(get_process, codegen))
     logger.info("Watching for changes in Python files...")
 
     while True:
