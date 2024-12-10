@@ -26,6 +26,7 @@ def copy_template_dir(template_dir: str | Path, init_config: InitConfig):
                     dest_file = rreplace(dest_file, tmpl_ext[0], tmpl_ext[1], 1)
                     break
 
+            dest_file = Template(dest_file).substitute(init_config.fe_type_substitute())
             os.makedirs(os.path.dirname(dest_file), exist_ok=True)
 
             if is_template:
