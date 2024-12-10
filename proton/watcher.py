@@ -15,6 +15,7 @@ from proton.schema.method import Method
 webview_process: Optional[Process] = None
 logger = logging.getLogger(__name__)
 
+
 def get_on_change(get_process: Callable, codegen: Callable) -> Callable:
     def on_change():
         codegen()
@@ -29,7 +30,10 @@ def get_on_change(get_process: Callable, codegen: Callable) -> Callable:
 
 def get_first_class_methods(file_path) -> tuple[Optional[str], list[Method]]:
     with open(file_path, "r") as file:
-        tree = ast.parse(file.read())
+        try:
+            tree = ast.parse(file.read())
+        except SyntaxError:
+            return None, []
 
     # Find the first class in the AST
     for node in tree.body:
