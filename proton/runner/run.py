@@ -1,3 +1,4 @@
+import time
 from typing import Any
 
 import webview
@@ -30,4 +31,5 @@ def get_evaluate_js(js_code: str = ""):
 
 
 def run(window, app: Any):
+    window.events.restored += get_evaluate_js(app)
     webview.start(get_evaluate_js(app), window, debug=True)
